@@ -193,4 +193,22 @@ Canvas.prototype.getImage = function () {
   return img_holder;
 };
 
+/**Saves the state of the canvas transformations and colors */
+Canvas.prototype.save = function () {
+  this.ctx.save();
+};
+
+/**resets the state of the canvas transformations and colors */
+Canvas.prototype.restore = function () {
+  this.ctx.restore();
+};
+
+/**
+ * scales the canvas
+ * @param {Number} x  - x scale factor
+ * @param {Number} y  - y scale factor
+ */
+Canvas.prototype.scale = function (x, y) {
+  this.ctx.scale(x, y);
+};
 export default Canvas;

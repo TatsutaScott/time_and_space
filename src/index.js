@@ -1,11 +1,13 @@
 import Canvas from "./util/Canvas";
 import IMG from "./util/IMG";
+import AnimationQueue from "./animation/AnimationQueue";
+
 import Clip from "./animation/Clip";
 import Smudge from "./animation/Smudge";
-import AnimationQueue from "./animation/AnimationQueue";
 import Worm from "./animation/Worm";
 import Squiggle from "./animation/Squiggle";
 import Spray from "./animation/Spray";
+import Layer from "./animation/Layer";
 
 const container = document.getElementById("canvasContainer");
 const TAP = new Canvas(container, 100, 100);
@@ -29,7 +31,7 @@ function draw() {
 }
 
 container.onclick = () => {
-  queue.add(Worm.random(images, 1));
+  queue.add(Layer.random(images, 1));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
