@@ -1,5 +1,5 @@
 import Canvas from "./util/Canvas";
-import IMG from "./util/image_util";
+import IMG from "./util/IMG";
 import Clip from "./animation/Clip";
 import Smudge from "./animation/Smudge";
 import AnimationQueue from "./animation/AnimationQueue";

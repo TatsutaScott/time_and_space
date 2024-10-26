@@ -1,4 +1,4 @@
-import IMG from "./image_util";
+import IMG from "./IMG";
 
 class Canvas {
   constructor(DOM, width, height) {
