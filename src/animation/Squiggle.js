@@ -12,8 +12,9 @@ class Squiggle {
     this.life = length * 30;
     this.count = 0;
     this.density = density;
+    this.noiseOffset = random(0, 10000);
     this.print();
-    noiseSeed(random(0, 10000));
+    // noiseSeed(random(0, 10000));
   }
 
   static random(imgs, length) {
@@ -43,12 +44,12 @@ Squiggle.prototype.animate = function (canvas) {
   for (let i = 0; i < this.density; i++) {
     const step = map(this.count, 0, this.length * this.density, 0.75, 1);
     this.sPos.set(
-      noise(step * 0.5, 0) * this.img.width,
-      noise(step * 0.5, 0.5) * this.img.width
+      noise(step * 0.5, 0 + this.noiseOffset) * this.img.width,
+      noise(step * 0.5, 0.5 + this.noiseOffset) * this.img.width
     );
     this.dPos.set(
-      noise(step, 0, 0.1) * this.img.width,
-      noise(step, 0.5, 0.7) * this.img.height
+      noise(step, 0, 0.1 + this.noiseOffset) * this.img.width,
+      noise(step, 0.5, 0.7 + this.noiseOffset) * this.img.height
     );
     canvas.image(
       this.img,
