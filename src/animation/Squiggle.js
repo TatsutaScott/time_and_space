@@ -14,7 +14,6 @@ class Squiggle {
     this.density = density;
     this.noiseOffset = random(0, 10000);
     this.print();
-    // noiseSeed(random(0, 10000));
   }
 
   static random(imgs, length) {

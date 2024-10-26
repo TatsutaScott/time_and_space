@@ -103,4 +103,15 @@ function arc(x, y, r, a, l) {
   return path;
 }
 
-export { line, star, ellipse, arc };
+/**
+ * Generates a point shaped path
+ * @param {Number} x - x position of the point
+ * @param {Number} y - y position of the point
+ */
+function point(x, y) {
+  const path = new Path2D();
+  path.rect(x - 0.25, y - 0.25, 0.5, 0.5);
+  return path;
+}
+
+export { line, star, ellipse, arc, point };

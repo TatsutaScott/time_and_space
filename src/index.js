@@ -4,6 +4,7 @@ import Clip from "./animation/Clip";
 import Smudge from "./animation/Smudge";
 import AnimationQueue from "./animation/AnimationQueue";
 import Squiggle from "./animation/Squiggle";
+import Spray from "./animation/Spray";
 
 const container = document.getElementById("canvasContainer");
 const TAP = new Canvas(container, 100, 100);
@@ -27,7 +28,7 @@ function draw() {
 }
 
 container.onclick = () => {
-  queue.add(Squiggle.random(images, 1));
+  queue.add(Spray.random(images, 1));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

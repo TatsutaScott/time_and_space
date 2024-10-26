@@ -1,7 +1,8 @@
 import Vector from "../util/Vector";
 import { map } from "../util/math_util";
 import { random } from "../util/random_util";
-import { easingArray } from "../util/easing_util";
+import { easingArray } from "../util/ease_util";
+import { point } from "../util/shape_util";
 // import { p5Color } from "./util/color_util";
 
 class Spray {
@@ -48,7 +49,7 @@ length: ${this.length}
 `);
 };
 
-Spray.prototype.animate = function (p5) {
+Spray.prototype.animate = function (canvas) {
   for (let i = 0; i < this.density; i++) {
     const radius = random(0, this.dDim);
     const dest = Vector.random(radius).add(this.dPos.x, this.dPos.y);
@@ -62,10 +63,12 @@ Spray.prototype.animate = function (p5) {
     );
     source.floor();
 
-    const c = p5Color.get(this.img, source.x, source.y);
+    const c = this.img.get(source.x, source.y); //p5Color.get(this.img, source.x, source.y);
     const alpha = map(this.ease(radius / this.dDim), 0, 1, 255, 0);
-    p5.stroke(c[0], c[1], c[2], alpha);
-    p5.point(dest.x, dest.y);
+    const fill = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${alpha})`;
+    canvas.shape(point(dest.x, dest.y), fill, null);
+    //p5.stroke(c[0], c[1], c[2], alpha);
+    //p5.point(dest.x, dest.y);
   }
 };
 
