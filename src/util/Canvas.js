@@ -104,7 +104,7 @@ Canvas.prototype.fullScreen = function () {
  * @property {Number} y0 - starting y-value for gradient
  * @property {Number} x1 - starting x-value for gradient
  * @property {Number} y1 - starting y-value for gradient
- * @property {Color_stop} colors - array of colors and positions in the gradient
+ * @property {[Color_stop]} colors - array of colors and positions in the gradient
  */
 /**function to generate a linear gradient
  * @param {Gradient_settings} settings - Defines the gradient, including information about start, stop, and colors

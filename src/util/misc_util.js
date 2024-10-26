@@ -19,6 +19,6 @@ export function dateString() {
  */
 export function isValid(arr) {
   return arr.every((v) => {
-    v != NaN && v != undefined && v != false && v != null;
+    return v != NaN && v != undefined && v != false && v != null;
   });
 }

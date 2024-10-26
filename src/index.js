@@ -3,6 +3,7 @@ import IMG from "./util/IMG";
 import Clip from "./animation/Clip";
 import Smudge from "./animation/Smudge";
 import AnimationQueue from "./animation/AnimationQueue";
+import Worm from "./animation/Worm";
 import Squiggle from "./animation/Squiggle";
 import Spray from "./animation/Spray";
 
@@ -28,7 +29,7 @@ function draw() {
 }
 
 container.onclick = () => {
-  queue.add(Spray.random(images, 1));
+  queue.add(Worm.random(images, 1));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

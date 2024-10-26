@@ -11,11 +11,11 @@ import { interp } from "./math_util.js";
  * @param {object} context Canvas context to draw to
  */
 
-function line(x1, y1, x2, y2, context) {
-  context.beginPath(); // Start a new path
-  context.moveTo(x1, y1); // Move the pen to (x1, y1)
-  context.lineTo(x2, y2); // Draw a line to (x2, y2)
-  context.stroke(); // Color in the stroke
+function line(x1, y1, x2, y2) {
+  const path = new Path2D(); // Start a new path
+  path.moveTo(x1, y1); // Move the pen to (x1, y1)
+  path.lineTo(x2, y2); // Draw a line to (x2, y2)
+  return path;
 }
 
 /**

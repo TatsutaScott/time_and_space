@@ -1,7 +1,7 @@
 import Vector from "../util/Vector";
-// import { p5Color } from "./util/color_util";
 import { isValid } from "../util/misc_util";
 import { random } from "../util/random_util";
+import { line } from "../util/shape_util";
 
 class Worm {
   constructor(imgs, length, pos, num, dist) {
@@ -41,7 +41,7 @@ length: ${this.length}
 `);
 };
 
-Worm.prototype.animate = function (p5) {
+Worm.prototype.animate = function (canvas) {
   for (let i of this.arr) {
     const prev = i.copy();
     i.add(random(-this.dist.x, this.dist.x), random(-this.dist.y, this.dist.y));
@@ -49,13 +49,29 @@ Worm.prototype.animate = function (p5) {
     i.floor();
 
     if (!i.inRange(0, 0, this.img.width, this.img.height)) continue;
-    const sColor = p5Color.get(this.img, prev.x, prev.y);
-    const eColor = p5Color.get(this.img, i.x, i.y);
+    const sColor = this.img.get(prev.x, prev.y);
+    const eColor = this.img.get(i.x, i.y);
+    console.log(isValid(sColor), sColor);
 
     if (isValid(sColor) && isValid(eColor)) {
-      const gradient = p5Color.linearGradient(p5, prev, sColor, i, eColor);
-      p5.drawingContext.strokeStyle = gradient;
-      p5.line(prev.x, prev.y, i.x, i.y);
+      const gradient = canvas.gradient({
+        x0: prev.x,
+        y0: prev.y,
+        x1: i.x,
+        y1: i.y,
+        colors: [
+          {
+            pos: 0,
+            color: `rgba(${sColor[0]},${sColor[1]},${sColor[2]},${sColor[3]})`,
+          },
+          {
+            pos: 1,
+            color: `rgba(${eColor[0]},${eColor[1]},${eColor[2]},${eColor[3]})`,
+          },
+        ],
+      });
+      console.log(gradient);
+      canvas.shape(line(prev.x, prev.y, i.x, i.y), null, gradient);
     }
   }
 };
