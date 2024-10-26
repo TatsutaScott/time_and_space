@@ -51,14 +51,11 @@ Worm.prototype.animate = function (canvas) {
     if (!i.inRange(0, 0, this.img.width, this.img.height)) continue;
     const sColor = this.img.get(prev.x, prev.y);
     const eColor = this.img.get(i.x, i.y);
-    console.log(isValid(sColor), sColor);
 
     if (isValid(sColor) && isValid(eColor)) {
       const gradient = canvas.gradient({
-        x0: prev.x,
-        y0: prev.y,
-        x1: i.x,
-        y1: i.y,
+        start: prev,
+        end: i,
         colors: [
           {
             pos: 0,
@@ -70,7 +67,6 @@ Worm.prototype.animate = function (canvas) {
           },
         ],
       });
-      console.log(gradient);
       canvas.shape(line(prev.x, prev.y, i.x, i.y), null, gradient);
     }
   }

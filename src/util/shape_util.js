@@ -10,7 +10,6 @@ import { interp } from "./math_util.js";
  * @param {number} y2 Ending y value
  * @param {object} context Canvas context to draw to
  */
-
 function line(x1, y1, x2, y2) {
   const path = new Path2D(); // Start a new path
   path.moveTo(x1, y1); // Move the pen to (x1, y1)
@@ -27,7 +26,6 @@ function line(x1, y1, x2, y2) {
  * @param {Number} r - radius
  * @returns {Path2D} - path object representing an ellipse
  */
-
 function ellipse(x, y, w, h, r = 0) {
   const path = new Path2D(); // inits the path object
   path.ellipse(x, y, w, h, r, 0, TAU); // adds an ellipse to the path

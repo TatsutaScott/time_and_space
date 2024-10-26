@@ -1,4 +1,5 @@
 import IMG from "./IMG";
+import Vector from "./Vector";
 
 class Canvas {
   constructor(DOM, width, height) {
@@ -104,6 +105,8 @@ Canvas.prototype.fullScreen = function () {
  * @property {Number} y0 - starting y-value for gradient
  * @property {Number} x1 - starting x-value for gradient
  * @property {Number} y1 - starting y-value for gradient
+ * @property {Vector} start - starting position for gradient
+ * @property {Vector} end - ending position for gradient
  * @property {[Color_stop]} colors - array of colors and positions in the gradient
  */
 /**function to generate a linear gradient
@@ -111,17 +114,24 @@ Canvas.prototype.fullScreen = function () {
  * @returns {CanvasGradient} - object representing a gradient
  */
 Canvas.prototype.gradient = function (settings) {
-  const gradient = this.ctx.createLinearGradient(
-    settings.x0,
-    settings.y0,
-    settings.x1,
-    settings.y1
-  );
-
-  for (const c of settings.colors) {
-    console.log(c.color);
-    gradient.addColorStop(c.pos, c.color);
+  let gradient;
+  if (settings.start && settings.end) {
+    gradient = this.ctx.createLinearGradient(
+      settings.start.x,
+      settings.start.y,
+      settings.end.x,
+      settings.end.y
+    );
+  } else if (settings.x0 && settings.x1 && settings.y0 && settings.y1) {
+    gradient = this.ctx.createLinearGradient(
+      settings.x0,
+      settings.y0,
+      settings.x1,
+      settings.y1
+    );
   }
+
+  settings.colors.forEach((c) => gradient.addColorStop(c.pos, c.color));
 
   return gradient;
 };
