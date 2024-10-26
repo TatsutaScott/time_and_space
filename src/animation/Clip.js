@@ -49,12 +49,12 @@ Clip.prototype.animate = function (canvas) {
   index = limit(index, this.start, this.end);
   canvas.image(
     this.imgs[index],
-    this.dPos.x,
-    this.dPos.y,
-    this.dim.x,
-    this.dim.y,
     this.sPos.x,
     this.sPos.y,
+    this.dim.x,
+    this.dim.y,
+    this.dPos.x,
+    this.dPos.y,
     this.dim.x,
     this.dim.y
   );

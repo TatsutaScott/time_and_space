@@ -1,6 +1,7 @@
 import Canvas from "./util/Canvas";
 import IMG from "./util/image_util";
 import Clip from "./animation/Clip";
+import Smudge from "./animation/Smudge";
 import AnimationQueue from "./animation/AnimationQueue";
 
 const container = document.getElementById("canvasContainer");
@@ -25,7 +26,7 @@ function draw() {
 }
 
 container.onclick = () => {
-  queue.add(Clip.random(images, 1));
+  queue.add(Smudge.random(images, 1));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
