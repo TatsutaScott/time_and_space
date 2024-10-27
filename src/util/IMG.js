@@ -8,6 +8,29 @@ class IMG {
     this.loadData(imageElement);
   }
 
+  static captureImages(video, length, frames) {
+    console.log("Capture start");
+
+    const images = [];
+    const interval = length / frames;
+    let count = 0;
+
+    return new Promise((resolve) => {
+      const captureImgs = setInterval(() => {
+        if (count >= frames) {
+          clearInterval(captureImgs);
+          console.log("Capture complete. Number of images:", images.length);
+          resolve(images); // Resolve with the array of images
+        } else {
+          // Capture the current frame
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          images.push(new IMG(canvas)); // Save image as an IMG object
+          count++;
+        }
+      }, interval);
+    });
+  }
+
   static loadImages(urls) {
     return new Promise((resolve, reject) => {
       const images = [];

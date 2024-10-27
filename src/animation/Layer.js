@@ -53,6 +53,7 @@ Layer.prototype.animate = function (canvas) {
 Layer.prototype.layer = function (canvas, img, destY, srcY, h, half) {
   const w = img.width;
   canvas.save();
+  canvas.ctx.globalAlpha = 1;
   canvas.image(img.image, (half * w) / 2, srcY, w / 2, h, 0, destY, w / 2, h);
   canvas.scale(-1, 1);
   canvas.image(img.image, (half * w) / 2, srcY, w / 2, h, -w, destY, w / 2, h);
