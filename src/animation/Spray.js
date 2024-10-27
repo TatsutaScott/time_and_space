@@ -53,8 +53,6 @@ Spray.prototype.animate = function (canvas) {
   for (let i = 0; i < this.density; i++) {
     const radius = random(0, this.dDim);
     const dest = Vector.random(radius).add(this.dPos.x, this.dPos.y);
-    dest.floor();
-
     const source = dest.map(
       new Vector(this.dPos.x, this.dPos.y),
       new Vector(this.dPos.x + this.dDim, this.dPos.y + this.dDim),
@@ -63,12 +61,10 @@ Spray.prototype.animate = function (canvas) {
     );
     source.floor();
 
-    const c = this.img.get(source.x, source.y); //p5Color.get(this.img, source.x, source.y);
+    const c = this.img.get(source.x, source.y);
     const alpha = map(this.ease(radius / this.dDim), 0, 1, 255, 0);
     const fill = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${alpha})`;
     canvas.shape(point(dest.x, dest.y), fill, null);
-    //p5.stroke(c[0], c[1], c[2], alpha);
-    //p5.point(dest.x, dest.y);
   }
 };
 

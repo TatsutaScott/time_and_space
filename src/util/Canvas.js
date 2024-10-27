@@ -168,10 +168,6 @@ Canvas.prototype.gradient = function (settings) {
  * @return {void}
  */
 Canvas.prototype.image = function (image, v1, v2, v3, v4, v5, v6, v7, v8) {
-  if (!(image instanceof Image)) {
-    image = image.image;
-  }
-  if (!(image instanceof Image)) return;
   if (v8) {
     this.ctx.drawImage(image, v1, v2, v3, v4, v5, v6, v7, v8);
   } else if (v4) {
@@ -181,17 +177,17 @@ Canvas.prototype.image = function (image, v1, v2, v3, v4, v5, v6, v7, v8) {
   }
 };
 
-// /**Returns the image data of the canvas
-//  * @returns {ImageData} - ImageData from the canvas
-//  */
-// Canvas.prototype.getImage = function () {
-//   const img_holder = document.createElement("canvas");
-//   img_holder.width = this.width;
-//   img_holder.height = this.height;
-//   const context = img_holder.getContext("2d");
-//   context.drawImage(this.canvas, 0, 0);
-//   return img_holder;
-// };
+/**Returns the image data of the canvas
+ * @returns {ImageData} - ImageData from the canvas
+ */
+Canvas.prototype.getImage = function () {
+  const img_holder = document.createElement("canvas");
+  img_holder.width = this.width;
+  img_holder.height = this.height;
+  const context = img_holder.getContext("2d");
+  context.drawImage(this.canvas, 0, 0);
+  return img_holder;
+};
 
 /**Saves the state of the canvas transformations and colors */
 Canvas.prototype.save = function () {

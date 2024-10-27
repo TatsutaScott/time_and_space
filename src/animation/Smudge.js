@@ -50,10 +50,9 @@ length: ${this.length}
 Smudge.prototype.animate = function (canvas) {
   const offset = Vector.mult(this.direction, this.dim);
   offset.mult(this.length - this.life);
-  console.log(offset);
 
   canvas.image(
-    this.img,
+    this.img.image,
     this.sPos.x,
     this.sPos.y,
     this.dim.x,
@@ -63,7 +62,6 @@ Smudge.prototype.animate = function (canvas) {
     this.dim.x,
     this.dim.y
   );
-  console.log(this.dPos.x + offset.x, this.dPos.y + offset.y);
 };
 
 Smudge.prototype.update = function () {

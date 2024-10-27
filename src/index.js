@@ -10,7 +10,7 @@ import Spray from "./animation/Spray";
 import Layer from "./animation/Layer";
 
 const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
-
+const container = document.getElementById("canvasContainer");
 const display = document.getElementById("display");
 const offscreenCanvas = display.transferControlToOffscreen();
 
@@ -19,14 +19,6 @@ const urls = [];
 for (let i = 1; i <= 20; i++) {
   urls.push(`/assets/imgs/frame (${i}).jpg`);
 }
-
-systemWorker.postMessage(
-  {
-    method: "setup",
-    canvas: offscreenCanvas,
-  },
-  [offscreenCanvas]
-);
 
 IMG.loadImages(urls).then((imgs) => {
   for (let i of imgs) {
@@ -39,9 +31,24 @@ IMG.loadImages(urls).then((imgs) => {
       [i.image]
     );
   }
+
+  systemWorker.postMessage(
+    {
+      method: "setup",
+      canvas: offscreenCanvas,
+      width: imgs[0].width,
+      height: imgs[1].height,
+    },
+    [offscreenCanvas]
+  );
 });
 
-// const container = document.getElementById("canvasContainer");
+display.onclick = () => {
+  systemWorker.postMessage({
+    method: "random",
+    length: 1,
+  });
+};
 // const TAP = new Canvas(container, 100, 100);
 // const queue = new AnimationQueue();
 
@@ -61,10 +68,6 @@ IMG.loadImages(urls).then((imgs) => {
 //   queue.update(TAP);
 //   drawLoop = setTimeout(() => requestAnimationFrame(draw), 1000 / 30);
 // }
-
-// container.onclick = () => {
-//   queue.add(Layer.random(images, 1));
-// };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

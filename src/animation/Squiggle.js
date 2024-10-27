@@ -51,7 +51,7 @@ Squiggle.prototype.animate = function (canvas) {
       noise(step, 0.5, 0.7 + this.noiseOffset) * this.img.height
     );
     canvas.image(
-      this.img,
+      this.img.image,
       this.sPos.x,
       this.sPos.y,
       this.dim.x,

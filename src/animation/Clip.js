@@ -48,7 +48,7 @@ Clip.prototype.animate = function (canvas) {
   let index = (this.life % (this.end - this.start)) + this.start;
   index = limit(index, this.start, this.end);
   canvas.image(
-    this.imgs[index],
+    this.imgs[index].image,
     this.sPos.x,
     this.sPos.y,
     this.dim.x,
