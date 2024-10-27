@@ -9,6 +9,8 @@ import Squiggle from "./animation/Squiggle";
 import Spray from "./animation/Spray";
 import Layer from "./animation/Layer";
 
+import { random } from "./util/random_util";
+
 // GLOBAL VARIABLES _________________________________
 let canvas,
   drawLoop,
@@ -29,7 +31,10 @@ const workerMethods = {
     images.push(img);
   },
   random: (e) => {
-    queue.add(Spray.random(images, e.data.length));
+    queue.add(random(animations)(images, e.data.length));
+  },
+  animation: (e) => {
+    queue.add(animations[e.data.type](images, e.data.length));
   },
 };
 
@@ -39,3 +44,12 @@ function draw() {
   queue.update(canvas);
   drawLoop = setTimeout(() => requestAnimationFrame(draw), 1000 / 30);
 }
+
+const animations = {
+  clip: Clip.random,
+  smudge: Smudge.random,
+  worm: Worm.random,
+  squiggle: Squiggle.random,
+  spray: Spray.random,
+  layer: Layer.random,
+};

@@ -10,7 +10,6 @@ import Spray from "./animation/Spray";
 import Layer from "./animation/Layer";
 
 const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
-const container = document.getElementById("canvasContainer");
 const display = document.getElementById("display");
 const offscreenCanvas = display.transferControlToOffscreen();
 
@@ -45,10 +44,12 @@ IMG.loadImages(urls).then((imgs) => {
 
 display.onclick = () => {
   systemWorker.postMessage({
-    method: "random",
+    method: "animation",
+    type: "spray",
     length: 1,
   });
 };
+
 // const TAP = new Canvas(container, 100, 100);
 // const queue = new AnimationQueue();
 
