@@ -207,4 +207,14 @@ Canvas.prototype.restore = function () {
 Canvas.prototype.scale = function (x, y) {
   this.ctx.scale(x, y);
 };
+
+/**clears the canvas */
+Canvas.prototype.clear = function () {
+  this.ctx.clearRect(0, 0, this.width, this.height);
+};
+
+/**hides the canvas */
+Canvas.prototype.hideCanvas = function () {
+  this.canvas.style.display = "none";
+};
 export default Canvas;

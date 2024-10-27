@@ -4,18 +4,18 @@ import { arc } from "./util/shape_util";
 const loadingAnimation = {
   step: 0,
   loop: 0,
-  start: function (device) {
-    device.background("lightgray");
-
+  start: function (device, time) {
+    device.clear();
+    device.background("rgba(255,255,255,0.5)");
     for (let i = 0; i < 4; i++) {
       const length = map(
-        Math.sin(this.step * 0.25),
+        Math.sin(map(this.step, 0, time * 3, 0, TAU)),
         -1,
         1,
-        TAU * 0.05,
-        TAU * 0.5
+        0,
+        TAU * 0.65
       );
-      const angle = this.step * (1 - i * 0.25);
+      const angle = map(this.step, 0, time * 3, 0, TAU * 5) * (1 - i * 0.25);
       const arc_path = arc(
         device.center.x,
         device.center.y,
@@ -26,7 +26,9 @@ const loadingAnimation = {
       device.shape(arc_path, null, "black");
     }
     this.step += 0.1;
-    this.loop = requestAnimationFrame(() => this.start(device));
+    setTimeout(() => {
+      this.loop = requestAnimationFrame(() => this.start(device, time));
+    }, 1000 / 30);
   },
   stop: function () {
     cancelAnimationFrame(this.loop);

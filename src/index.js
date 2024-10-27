@@ -1,5 +1,7 @@
 import IMG from "./util/IMG";
+import Canvas from "./util/Canvas";
 import { random } from "./util/random_util";
+import loadingAnimation from "./loading";
 
 const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
 
@@ -7,6 +9,7 @@ const video = document.getElementById("viewFinder");
 const startButton = document.getElementById("start");
 const display = document.getElementById("display");
 const offscreenCanvas = display.transferControlToOffscreen();
+const cover_page = document.getElementById("cover");
 
 //set video stream to show on video element
 navigator.mediaDevices
@@ -19,8 +22,19 @@ navigator.mediaDevices
   });
 
 startButton.onclick = () => {
+  //hide cover page
+  cover_page.style.display = "none";
+
+  //init loading screen
+  const loading = new Canvas(
+    document.getElementById("loading"),
+    video.videoWidth,
+    video.videoHeight
+  );
+  loadingAnimation.start(loading, 4); //start animation
+
+  //begin image capture
   IMG.captureImages(video, 4000, 8).then((imgs) => {
-    console.log(imgs);
     for (let i of imgs) {
       systemWorker.postMessage(
         {
@@ -32,6 +46,13 @@ startButton.onclick = () => {
       );
     }
 
+    //hide video/loading and show main canvas
+    loadingAnimation.stop();
+    loading.hideCanvas();
+    video.style.display = "none";
+    display.style.display = "block";
+
+    //start the main canvas
     systemWorker.postMessage(
       {
         method: "setup",
