@@ -9,30 +9,62 @@ import Squiggle from "./animation/Squiggle";
 import Spray from "./animation/Spray";
 import Layer from "./animation/Layer";
 
-const container = document.getElementById("canvasContainer");
-const TAP = new Canvas(container, 100, 100);
-const queue = new AnimationQueue();
+const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
 
-let images, drawLoop;
+const display = document.getElementById("display");
+const offscreenCanvas = display.transferControlToOffscreen();
+
+let drawLoop;
 const urls = [];
 for (let i = 1; i <= 20; i++) {
   urls.push(`/assets/imgs/frame (${i}).jpg`);
 }
 
+systemWorker.postMessage(
+  {
+    method: "setup",
+    canvas: offscreenCanvas,
+  },
+  [offscreenCanvas]
+);
+
 IMG.loadImages(urls).then((imgs) => {
-  images = imgs;
-  TAP.setDimensions(imgs[0].width, imgs[0].height);
-  drawLoop = requestAnimationFrame(draw);
+  for (let i of imgs) {
+    systemWorker.postMessage(
+      {
+        method: "loadImage",
+        bitmap: i.image,
+        pixels: i.pixels,
+      },
+      [i.image]
+    );
+  }
 });
 
-function draw() {
-  queue.update(TAP);
-  drawLoop = setTimeout(() => requestAnimationFrame(draw), 1000 / 30);
-}
+// const container = document.getElementById("canvasContainer");
+// const TAP = new Canvas(container, 100, 100);
+// const queue = new AnimationQueue();
 
-container.onclick = () => {
-  queue.add(Layer.random(images, 1));
-};
+// let images, drawLoop;
+// const urls = [];
+// for (let i = 1; i <= 20; i++) {
+//   urls.push(`/assets/imgs/frame (${i}).jpg`);
+// }
+
+// IMG.loadImages(urls).then((imgs) => {
+//   images = imgs;
+//   TAP.setDimensions(imgs[0].width, imgs[0].height);
+//   drawLoop = requestAnimationFrame(draw);
+// });
+
+// function draw() {
+//   queue.update(TAP);
+//   drawLoop = setTimeout(() => requestAnimationFrame(draw), 1000 / 30);
+// }
+
+// container.onclick = () => {
+//   queue.add(Layer.random(images, 1));
+// };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

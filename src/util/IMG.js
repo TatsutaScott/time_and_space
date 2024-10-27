@@ -3,10 +3,9 @@ const ctx = canvas.getContext("2d");
 
 class IMG {
   constructor(imageElement) {
-    this.image = imageElement;
     this.width = imageElement.width;
     this.height = imageElement.height;
-    this.loadPixels();
+    this.loadData(imageElement);
   }
 
   static loadImages(urls) {
@@ -36,18 +35,6 @@ class IMG {
   }
 }
 
-IMG.prototype.loadPixels = function () {
-  // Set canvas size to match the image
-  canvas.width = this.image.width;
-  canvas.height = this.image.height;
-
-  // Draw the image on the canvas
-  ctx.drawImage(this.image, 0, 0);
-
-  // Get the pixel data
-  this.pixels = ctx.getImageData(0, 0, this.width, this.height).data;
-};
-
 IMG.prototype.get = function (x, y) {
   const index = (x + y * this.width) * 4;
   return [
@@ -56,6 +43,21 @@ IMG.prototype.get = function (x, y) {
     this.pixels[index + 2],
     this.pixels[index + 3],
   ];
+};
+
+IMG.prototype.loadData = function (imageElement) {
+  createImageBitmap(imageElement).then((bitmap) => {
+    this.image = bitmap;
+    // Set canvas size to match the image
+    canvas.width = this.width;
+    canvas.height = this.height;
+
+    // Draw the image on the canvas
+    ctx.drawImage(bitmap, 0, 0);
+
+    // Get the pixel data
+    this.pixels = ctx.getImageData(0, 0, this.width, this.height).data;
+  });
 };
 
 export default IMG;
