@@ -64,7 +64,7 @@ Spray.prototype.animate = function (canvas) {
     const c = this.img.get(source.x, source.y);
     const alpha = map(this.ease(radius / this.dDim), 0, 1, 255, 0);
     const fill = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${alpha})`;
-    canvas.shape(point(dest.x, dest.y), fill, null);
+    canvas.shape(point(dest.x, dest.y, 1), fill, null);
   }
 };
 

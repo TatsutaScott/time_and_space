@@ -106,9 +106,9 @@ function arc(x, y, r, a, l) {
  * @param {Number} x - x position of the point
  * @param {Number} y - y position of the point
  */
-function point(x, y) {
+function point(x, y, size = 1) {
   const path = new Path2D();
-  path.rect(x - 0.25, y - 0.25, 0.5, 0.5);
+  path.rect(x - size / 2, y - size / 2, size, size);
   return path;
 }
 

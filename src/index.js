@@ -1,13 +1,5 @@
-import Canvas from "./util/Canvas";
 import IMG from "./util/IMG";
-import AnimationQueue from "./animation/AnimationQueue";
-
-import Clip from "./animation/Clip";
-import Smudge from "./animation/Smudge";
-import Worm from "./animation/Worm";
-import Squiggle from "./animation/Squiggle";
-import Spray from "./animation/Spray";
-import Layer from "./animation/Layer";
+import { random } from "./util/random_util";
 
 const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
 const display = document.getElementById("display");
@@ -44,9 +36,8 @@ IMG.loadImages(urls).then((imgs) => {
 
 display.onclick = () => {
   systemWorker.postMessage({
-    method: "animation",
-    type: "spray",
-    length: 1,
+    method: "random",
+    length: random(0.2, 4),
   });
 };
 
