@@ -1,55 +1,12 @@
-// import IMG from "./util/IMG";
-// import { random } from "./util/random_util";
-
-// const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
-// const display = document.getElementById("display");
-// const offscreenCanvas = display.transferControlToOffscreen();
-
-// const urls = [];
-// for (let i = 1; i <= 20; i++) {
-//   urls.push(`/assets/imgs/frame (${i}).jpg`);
-// }
-
-// IMG.loadImages(urls).then((imgs) => {
-//   for (let i of imgs) {
-//     systemWorker.postMessage(
-//       {
-//         method: "loadImage",
-//         bitmap: i.image,
-//         pixels: i.pixels,
-//       },
-//       [i.image]
-//     );
-//   }
-
-//   systemWorker.postMessage(
-//     {
-//       method: "setup",
-//       canvas: offscreenCanvas,
-//       width: imgs[0].width,
-//       height: imgs[1].height,
-//     },
-//     [offscreenCanvas]
-//   );
-// });
-
-// display.onclick = () => {
-//   systemWorker.postMessage({
-//     method: "random",
-//     length: random(0.2, 4),
-//   });
-// };
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import IMG from "./util/IMG";
+import { random } from "./util/random_util";
+
+const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
 
 const video = document.getElementById("viewFinder");
 const startButton = document.getElementById("start");
-const utilCanvas = document.createElement("canvas");
-const utilCtx = utilCanvas.getContext("2d");
-let capturedImages = [];
+const display = document.getElementById("display");
+const offscreenCanvas = display.transferControlToOffscreen();
 
 //set video stream to show on video element
 navigator.mediaDevices
@@ -62,7 +19,36 @@ navigator.mediaDevices
   });
 
 startButton.onclick = () => {
-  IMG.captureImages(video, 4000, 8);
+  IMG.captureImages(video, 4000, 8).then((imgs) => {
+    console.log(imgs);
+    for (let i of imgs) {
+      systemWorker.postMessage(
+        {
+          method: "loadImage",
+          bitmap: i.image,
+          pixels: i.pixels,
+        },
+        [i.image]
+      );
+    }
+
+    systemWorker.postMessage(
+      {
+        method: "setup",
+        canvas: offscreenCanvas,
+        width: imgs[0].width,
+        height: imgs[1].height,
+      },
+      [offscreenCanvas]
+    );
+  });
+};
+
+display.onclick = () => {
+  systemWorker.postMessage({
+    method: "random",
+    length: random(0.2, 4),
+  });
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

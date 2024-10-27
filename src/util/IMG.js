@@ -11,6 +11,10 @@ class IMG {
   static captureImages(video, length, frames) {
     console.log("Capture start");
 
+    //set canvas size to match video size
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
     const images = [];
     const interval = length / frames;
     let count = 0;

@@ -29,6 +29,7 @@ const workerMethods = {
   loadImage: (e) => {
     const img = new ImageData(e.data.bitmap, e.data.pixels);
     images.push(img);
+    console.log("image loaded");
   },
   random: (e) => {
     queue.add(random(animations)(images, e.data.length));
