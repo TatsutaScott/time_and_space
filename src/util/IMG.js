@@ -60,6 +60,16 @@ class IMG {
       });
     });
   }
+
+  grayscale(pixels, index, ease = (x) => x) {
+    const r = pixels[index + 0] / 255;
+    const g = pixels[index + 1] / 255;
+    const b = pixels[index + 2] / 255;
+
+    // Use the luminosity formula to calculate grayscale
+    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+    return ease(gray) * 255;
+  }
 }
 
 IMG.prototype.get = function (x, y) {
