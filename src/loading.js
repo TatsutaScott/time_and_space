@@ -6,7 +6,7 @@ const loadingAnimation = {
   loop: 0,
   start: function (device, time) {
     device.clear();
-    device.background("rgba(255,255,255,0.5)");
+    device.background("rgba(255,255,255,0.1)");
     for (let i = 0; i < 4; i++) {
       const length = map(
         Math.sin(map(this.step, 0, time * 3, 0, TAU)),
