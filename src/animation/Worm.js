@@ -23,8 +23,8 @@ class Worm {
     const h = imgs[0].height;
 
     const pos = new Vector(random(0, w), random(0, h));
-    const num = random(10, 100, true);
-    const dist = new Vector(random(1, 20), random(1, 20));
+    const num = random(10, 25, true);
+    const dist = new Vector(random(1, 10), random(1, 10));
 
     return new Worm(imgs, length, pos, num, dist);
   }

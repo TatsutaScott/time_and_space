@@ -22,13 +22,14 @@ class Squiggle {
     const dim = new Vector(random(0, 100), random(0, 100));
     const sPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
     const dPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
-    return new Squiggle(imgs, dim, sPos, dPos, length);
+    const density = Math.floor(random(20, 40));
+    return new Squiggle(imgs, dim, sPos, dPos, length, density);
   }
 }
 
 Squiggle.prototype.print = function () {
-  console.log(`
-dimensions: 
+  console.log(
+    `dimensions: 
     width: ${this.dim.x.toFixed(2)}
     height: ${this.dim.y.toFixed(2)}
 position: 
@@ -36,7 +37,8 @@ position:
     destination: (${this.dPos.x.toFixed(2)}, ${this.dPos.y.toFixed(2)})
 life: ${this.life}
 length: ${this.length}
-`);
+`
+  );
 };
 
 Squiggle.prototype.animate = function (canvas) {

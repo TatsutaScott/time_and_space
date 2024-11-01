@@ -1,5 +1,7 @@
 import IMG from "./util/IMG";
 import { easingArray } from "./util/ease_util";
+import { probability } from "./util/random_util";
+import { map } from "./util/math_util";
 
 export function setVideoStream(video) {
   navigator.mediaDevices
@@ -52,9 +54,13 @@ function filterImages(images) {
   return new Promise((resolve, reject) => {
     // Array to hold filtered bitmap promises
     const filteredBitmaps = images.map((image) => {
+      const filterDirection = probability(0.5);
       return new Promise((resolveImage, rejectImage) => {
         const filteredImage = image.copy((r, g, b, a) => {
-          const gray = IMG.grayscale(r, g, b);
+          let gray = IMG.grayscale(r, g, b);
+          if (filterDirection) {
+            gray = map(gray, 0, 255, 255, 0);
+          }
           const eased = easingArray[12](gray / 255);
           return [r, g, b, eased * 255];
         });

@@ -1,9 +1,8 @@
 import Vector from "../util/Vector";
-import { map } from "../util/math_util";
 import { random } from "../util/random_util";
 import { easingArray } from "../util/ease_util";
 import { point } from "../util/shape_util";
-// import { p5Color } from "./util/color_util";
+import { wrap } from "../util/math_util";
 
 class Spray {
   constructor(img, length, sPos, sDim, dPos, dDim, density) {
@@ -27,15 +26,15 @@ class Spray {
 
     const sPos = new Vector(random(sDim, w - sDim), random(sDim, h - sDim));
     const dPos = new Vector(random(dDim, w - dDim), random(dDim, h - dDim));
-    const density = random(500, 5000, true);
+    const density = random(50, 750, true);
 
     return new Spray(random(imgs), length, sPos, sDim, dPos, dDim, density);
   }
 }
 
 Spray.prototype.print = function () {
-  console.log(`
-type: Spray
+  console.log(
+    `type: Spray
 dimensions: 
     source: ${this.sDim.toFixed(2)}
     destination: ${this.dDim.toFixed(2)}
@@ -46,7 +45,8 @@ density: ${this.density}
 easing function: ${this.ease}
 life: ${this.life}
 length: ${this.length}
-`);
+`
+  );
 };
 
 Spray.prototype.animate = function (canvas) {
@@ -62,8 +62,8 @@ Spray.prototype.animate = function (canvas) {
     source.floor();
 
     const c = this.img.get(source.x, source.y);
-    const alpha = map(this.ease(radius / this.dDim), 0, 1, 255, 0);
-    const fill = `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${alpha})`;
+    const alpha = wrap(this.ease(radius / this.dDim) * (c[3] / 255), 0, 1);
+    const fill = `rgb(${c[0]} ${c[1]} ${c[2]} / ${alpha})`;
     canvas.shape(point(dest.x, dest.y, 1), fill, null);
   }
 };

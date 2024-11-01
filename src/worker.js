@@ -25,7 +25,7 @@ const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);
     canvas.background("white");
-    canvas.image(images[images.length - 1].image, 0, 0);
+    // canvas.image(images[images.length - 1].image, 0, 0);
     drawLoop = requestAnimationFrame(draw);
   },
   loadImage: (e) => {

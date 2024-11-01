@@ -1,3 +1,6 @@
+export const probability = (value) => {
+  return Math.random() < value;
+};
 /**
  * depending on the arguments, either picks a random float between two numbers, or a random entry in an array
  * @param {number | array} a - either the lower boundary for the random range or an array

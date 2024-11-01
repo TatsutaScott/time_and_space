@@ -55,8 +55,13 @@ startButton.onclick = () => {
 };
 
 display.onclick = () => {
+  // systemWorker.postMessage({
+  //   method: "random",
+  //   length: random(0.2, 4),
+  // });
   systemWorker.postMessage({
-    method: "random",
+    method: "animation",
     length: random(0.2, 4),
+    type: "worm",
   });
 };
