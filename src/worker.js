@@ -20,7 +20,6 @@ const queue = new AnimationQueue();
 
 // MESSAGE HANDLING AND ROUTING ______________________
 onmessage = (e) => workerMethods[e.data.method](e);
-
 const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);

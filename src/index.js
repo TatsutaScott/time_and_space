@@ -27,17 +27,18 @@ startButton.onclick = () => {
     video.videoWidth,
     video.videoHeight
   );
-  loadingAnimation.start(loading, 4); //start animation
+  loadingAnimation.start(loading, 0.2); //start animation
 
   console.log("starting audio recording");
   device.sendMessage("in3", [1]); // start audio recording
-
-  captureImages(1000, 4, video, 4, systemWorker, () => {
-    //hide video/loading
+  setTimeout(() => {
     loadingAnimation.stop();
     loading.hideCanvas();
     video.style.display = "none";
+    document.getElementById("loadText").style.display = "block";
+  }, 999);
 
+  captureImages(1000, 40, video, 4, systemWorker, () => {
     //show main canvas
     display.style.display = "block";
   }).then((imgs) => {
@@ -51,14 +52,13 @@ startButton.onclick = () => {
       },
       [offscreenCanvas]
     );
+    loadingAnimation.stop();
+    loading.hideCanvas();
+    document.getElementById("loadText").style.display = "none";
   });
 };
 
 display.onclick = () => {
-  // systemWorker.postMessage({
-  //   method: "random",
-  //   length: random(0.2, 4),
-  // });
   systemWorker.postMessage({
     method: "animation",
     length: random(0.2, 4),

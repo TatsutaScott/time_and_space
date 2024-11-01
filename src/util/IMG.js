@@ -2,6 +2,7 @@ import ImageData from "./ImageData";
 
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
+let viewFinder;
 
 class IMG {
   constructor(imageElement) {
@@ -12,7 +13,7 @@ class IMG {
 
   static captureImages(video, length, frames) {
     console.log("Capture start");
-
+    viewFinder = video;
     //set canvas size to match video size
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
@@ -24,6 +25,7 @@ class IMG {
     return new Promise((resolve) => {
       const captureImgs = setInterval(() => {
         if (count >= frames) {
+          console.log(viewFinder);
           clearInterval(captureImgs);
           console.log("Capture complete. Number of images:", images.length);
           resolve(images); // Resolve with the array of images
