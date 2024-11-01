@@ -14,7 +14,8 @@ import { random } from "./util/random_util";
 // GLOBAL VARIABLES _________________________________
 let canvas,
   drawLoop,
-  images = [];
+  images = [],
+  filtered = [];
 const queue = new AnimationQueue();
 
 // MESSAGE HANDLING AND ROUTING ______________________
@@ -24,6 +25,7 @@ const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);
     canvas.background("white");
+    canvas.image(images[images.length - 1].image, 0, 0);
     drawLoop = requestAnimationFrame(draw);
   },
   loadImage: (e) => {
@@ -31,11 +33,19 @@ const workerMethods = {
     images.push(img);
     console.log("image loaded");
   },
+  loadFiltered: (e) => {
+    if (!Array.isArray(filtered[e.data.arr])) {
+      filtered[e.data.arr] = [];
+    }
+    const img = new ImageData(e.data.bitmap, e.data.pixels);
+    filtered[e.data.arr].push(img);
+    console.log("filtered image loaded");
+  },
   random: (e) => {
-    queue.add(random(animations)(images, e.data.length));
+    queue.add(random(animations)(random(filtered), e.data.length));
   },
   animation: (e) => {
-    queue.add(animations[e.data.type](images, e.data.length));
+    queue.add(animations[e.data.type](random(filtered), e.data.length));
   },
 };
 

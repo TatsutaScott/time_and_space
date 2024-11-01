@@ -1,3 +1,5 @@
+import ImageData from "./ImageData";
+
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -61,14 +63,13 @@ class IMG {
     });
   }
 
-  grayscale(pixels, index, ease = (x) => x) {
-    const r = pixels[index + 0] / 255;
-    const g = pixels[index + 1] / 255;
-    const b = pixels[index + 2] / 255;
-
+  static grayscale(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
     // Use the luminosity formula to calculate grayscale
     const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-    return ease(gray) * 255;
+    return gray * 255;
   }
 }
 
@@ -95,6 +96,30 @@ IMG.prototype.loadData = function (imageElement) {
     // Get the pixel data
     this.pixels = ctx.getImageData(0, 0, this.width, this.height).data;
   });
+};
+
+IMG.prototype.copy = function (filter = (r, g, b, a) => [r, g, b, a]) {
+  const imgData = ctx.createImageData(this.width, this.height); //create a blank image
+  const imgPixels = imgData.data; //get the pixel array
+
+  for (let i = 0; i < this.pixels.length; i += 4) {
+    //apply the filter to each pixel
+    const newPixel = filter(
+      this.pixels[i + 0],
+      this.pixels[i + 1],
+      this.pixels[i + 2],
+      this.pixels[i + 3]
+    );
+
+    //copy the filtered pixel to the new image;
+    imgPixels[i + 0] = newPixel[0];
+    imgPixels[i + 1] = newPixel[1];
+    imgPixels[i + 2] = newPixel[2];
+    imgPixels[i + 3] = newPixel[3];
+  }
+
+  const imgBitmap = createImageBitmap(imgData); //generate bitmap of the image
+  return new ImageData(imgBitmap, imgData);
 };
 
 export default IMG;
