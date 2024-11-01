@@ -15,6 +15,65 @@ const offscreenCanvas = display.transferControlToOffscreen();
 const video = setVideoStream(document.getElementById("viewFinder")); //set up video
 const device = init_RNBO(patcher, () => {
   startButton.style.display = "block";
+
+  // device.onMessage((e) => {
+  //   if (e.tag == "out3") {
+  //     if (e.payload[1] == 0) return;
+  //     switch (e.payload[0]) {
+  //       case 0:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "clip",
+  //         });
+  //         break;
+  //       case 1:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "spray",
+  //         });
+  //         break;
+  //       case 2:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "smudge",
+  //         });
+  //         break;
+  //       case 3:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "layer",
+  //         });
+  //         break;
+  //       case 4:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "squiggle",
+  //         });
+  //         break;
+  //       case 5:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "worm",
+  //         });
+  //         break;
+  //       case 6:
+  //         systemWorker.postMessage({
+  //           method: "animation",
+  //           length: e.payload[1],
+  //           type: "line",
+  //         });
+  //         break;
+  //       default:
+  //         console.log(e.payload);
+  //     }
+  //   }
+  // });
 });
 
 startButton.onclick = () => {
@@ -27,7 +86,7 @@ startButton.onclick = () => {
     video.videoWidth,
     video.videoHeight
   );
-  loadingAnimation.start(loading, 0.2); //start animation
+  loadingAnimation.start(loading, 0.25); //start animation
 
   console.log("starting audio recording");
   device.sendMessage("in3", [1]); // start audio recording
@@ -38,7 +97,7 @@ startButton.onclick = () => {
     document.getElementById("loadText").style.display = "block";
   }, 999);
 
-  captureImages(1000, 40, video, 4, systemWorker, () => {
+  captureImages(1000, 10, video, 4, systemWorker, () => {
     //show main canvas
     display.style.display = "block";
   }).then((imgs) => {
@@ -62,6 +121,6 @@ display.onclick = () => {
   systemWorker.postMessage({
     method: "animation",
     length: random(0.2, 4),
-    type: "worm",
+    type: "line",
   });
 };

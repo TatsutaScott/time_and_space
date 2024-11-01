@@ -22,7 +22,7 @@ class Clip {
     const sPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
     const dPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
     const start = Math.floor(random(0, imgs.length, true));
-    const end = Math.floor(random(start, imgs.length, true));
+    const end = Math.floor(random(start + 1, imgs.length, true));
 
     return new Clip(imgs, sPos, dPos, dim, start, end, length);
   }
@@ -40,7 +40,6 @@ position:
     source: (${this.sPos.x.toFixed(2)}, ${this.sPos.x.toFixed(2)})
     destination: (${this.dPos.x.toFixed(2)}, ${this.dPos.x.toFixed(2)})
 life: ${this.life}
-length: ${this.length}
 `);
 };
 

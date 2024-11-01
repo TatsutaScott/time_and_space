@@ -8,6 +8,7 @@ import Worm from "./animation/Worm";
 import Squiggle from "./animation/Squiggle";
 import Spray from "./animation/Spray";
 import Layer from "./animation/Layer";
+import Line from "./animation/Line";
 
 import { random } from "./util/random_util";
 
@@ -24,7 +25,7 @@ const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);
     canvas.background("white");
-    // canvas.image(images[images.length - 1].image, 0, 0);
+    canvas.image(images[images.length - 1].image, 0, 0);
     drawLoop = requestAnimationFrame(draw);
   },
   loadImage: (e) => {
@@ -62,4 +63,5 @@ const animations = {
   squiggle: Squiggle.random,
   spray: Spray.random,
   layer: Layer.random,
+  line: Line.random,
 };

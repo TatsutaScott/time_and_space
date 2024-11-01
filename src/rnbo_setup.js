@@ -17,8 +17,6 @@ export function init_RNBO(patcher, onload = () => null) {
 
             console.log("initiating main patch");
             device.sendMessage("in4", [1]); // start main patch
-          } else {
-            console.log(e.payload);
           }
           break;
         default:
