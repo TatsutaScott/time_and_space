@@ -121,6 +121,6 @@ display.onclick = () => {
   systemWorker.postMessage({
     method: "animation",
     length: random(0.2, 4),
-    type: "line",
+    type: "cutter",
   });
 };
