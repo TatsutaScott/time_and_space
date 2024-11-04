@@ -3,7 +3,7 @@ import { map } from "../util/math_util";
 import Vector from "../util/Vector";
 
 class Squiggle {
-  constructor(imgs, dim, sPos, dPos, length, density = 5) {
+  constructor(imgs, dim, sPos, dPos, length, dist, density = 5) {
     this.img = random(imgs);
     this.dim = dim;
     this.sPos = sPos;
@@ -11,6 +11,7 @@ class Squiggle {
     this.length = length * 30;
     this.life = length * 30;
     this.count = 0;
+    this.dist = dist;
     this.density = density;
     this.noiseOffset = random(0, 10000);
     this.print();
@@ -18,8 +19,8 @@ class Squiggle {
 
   static random(canvas, imgs, length) {
     const dim = new Vector(
-      random(imgs[0].width * 0.01, imgs[0].width * 0.2),
-      random(imgs[0].width * 0.01, imgs[0].width * 0.2)
+      random(imgs[0].width * 0.01, imgs[0].width * 0.4),
+      random(imgs[0].width * 0.01, imgs[0].width * 0.4)
     );
     const sPos = new Vector(
       random(0, imgs[0].width - dim.x),
@@ -29,8 +30,9 @@ class Squiggle {
       random(0, canvas.width - dim.x),
       random(0, canvas.height - dim.y)
     );
-    const density = Math.floor(random(20, 40));
-    return new Squiggle(imgs, dim, sPos, dPos, length, density);
+    const density = Math.floor(random(10, 30));
+    const dist = random(0, 1);
+    return new Squiggle(imgs, dim, sPos, dPos, length, dist, density);
   }
 }
 
@@ -50,14 +52,14 @@ length: ${this.length}
 
 Squiggle.prototype.animate = function (canvas) {
   for (let i = 0; i < this.density; i++) {
-    const step = map(this.count, 0, this.length * this.density, 0.75, 1);
+    const step = map(this.count, 0, this.length * this.density, 0, this.dist);
     this.sPos.set(
       noise(step * 0.5, 0 + this.noiseOffset) * this.img.width,
       noise(step * 0.5, 0.5 + this.noiseOffset) * this.img.width
     );
     this.dPos.set(
-      noise(step, 0, 0.1 + this.noiseOffset) * this.img.width,
-      noise(step, 0.5, 0.7 + this.noiseOffset) * this.img.height
+      noise(step, 0, 0.1 + this.noiseOffset) * canvas.width,
+      noise(step, 0.5, 0.7 + this.noiseOffset) * canvas.height
     );
     canvas.image(
       this.img.image,
