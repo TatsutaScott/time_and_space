@@ -15,7 +15,7 @@ export function setVideoStream(video) {
   return video;
 }
 
-export function captureImages(time, captures, video, filters, worker, onload) {
+export function captureImages(time, captures, video, worker, onload) {
   //begin image capture
   return IMG.captureImages(video, time, captures).then((imgs) => {
     for (let i of imgs) {
@@ -43,6 +43,7 @@ export function captureImages(time, captures, video, filters, worker, onload) {
         );
       }
     });
+
     filterImages(imgs, random(easingArray), false).then((filteredImgs) => {
       for (let f of filteredImgs) {
         worker.postMessage(

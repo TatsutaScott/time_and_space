@@ -2,21 +2,23 @@ import { random, noise } from "../util/random_util";
 import { map } from "../util/math_util";
 
 class Layer {
-  constructor(imgs, length, start, end) {
+  constructor(imgs, length, start, end, center) {
     this.imgs = imgs;
     this.length = length * 30;
     this.life = length * 30;
     this.start = start;
     this.end = end;
+    this.center = center;
     this.half = Math.floor(random(0, 2));
     this.noiseOff;
     this.print();
   }
 
-  static random(imgs, length) {
-    const start = random(0, imgs[0].height);
-    const end = random(start, imgs[0].height);
-    return new Layer(imgs, length, start, end);
+  static random(canvas, imgs, length) {
+    const start = random(0, canvas.height);
+    const end = random(start, canvas.height);
+    const center = random(0, canvas.width);
+    return new Layer(imgs, length, start, end, center);
   }
 }
 
@@ -54,9 +56,29 @@ Layer.prototype.layer = function (canvas, img, destY, srcY, h, half) {
   const w = img.width;
   canvas.save();
   canvas.ctx.globalAlpha = 1;
-  canvas.image(img.image, (half * w) / 2, srcY, w / 2, h, 0, destY, w / 2, h);
+  canvas.image(
+    img.image,
+    (half * w) / 2,
+    srcY,
+    w / 2,
+    h,
+    this.center,
+    destY,
+    w / 2,
+    h
+  );
   canvas.scale(-1, 1);
-  canvas.image(img.image, (half * w) / 2, srcY, w / 2, h, -w, destY, w / 2, h);
+  canvas.image(
+    img.image,
+    (half * w) / 2,
+    srcY,
+    w / 2,
+    h,
+    this.center - w / 2,
+    destY,
+    w / 2,
+    h
+  );
   canvas.restore();
 };
 

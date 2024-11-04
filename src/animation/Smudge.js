@@ -13,9 +13,9 @@ class Smudge {
     this.print();
   }
 
-  static random(imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[0].height;
+  static random(canvas, imgs, length) {
+    const w = canvas.width;
+    const h = canvas.height;
     const horizontal = random(0, 1) < 0.5;
     const dim = horizontal
       ? new Vector(random(1, 10), random(1, h))

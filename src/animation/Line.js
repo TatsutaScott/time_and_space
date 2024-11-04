@@ -18,9 +18,9 @@ class Line {
     this.print();
   }
 
-  static random(imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[1].height;
+  static random(canvas, imgs, length) {
+    const w = canvas.width;
+    const h = canvas.height;
     const start = new Vector(random(0, w), random(0, h));
     const end = new Vector(random(0, w), random(0, h));
     const direction = Vector.random();

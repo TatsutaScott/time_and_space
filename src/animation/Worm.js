@@ -18,13 +18,13 @@ class Worm {
     this.print();
   }
 
-  static random(imgs, length) {
+  static random(canvas, imgs, length) {
     const w = imgs[0].width;
     const h = imgs[0].height;
 
-    const pos = new Vector(random(0, w), random(0, h));
-    const num = random(10, 25, true);
-    const dist = new Vector(random(1, 10), random(1, 10));
+    const pos = new Vector(random(0, canvas.width), random(0, canvas.height));
+    const num = random(3, 30, true);
+    const dist = new Vector(random(1, 30), random(1, 30));
 
     return new Worm(imgs, length, pos, num, dist);
   }

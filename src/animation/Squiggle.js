@@ -16,12 +16,19 @@ class Squiggle {
     this.print();
   }
 
-  static random(imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[0].height;
-    const dim = new Vector(random(0, 100), random(0, 100));
-    const sPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
-    const dPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));
+  static random(canvas, imgs, length) {
+    const dim = new Vector(
+      random(imgs[0].width * 0.01, imgs[0].width * 0.2),
+      random(imgs[0].width * 0.01, imgs[0].width * 0.2)
+    );
+    const sPos = new Vector(
+      random(0, imgs[0].width - dim.x),
+      random(0, imgs[0].height - dim.y)
+    );
+    const dPos = new Vector(
+      random(0, canvas.width - dim.x),
+      random(0, canvas.height - dim.y)
+    );
     const density = Math.floor(random(20, 40));
     return new Squiggle(imgs, dim, sPos, dPos, length, density);
   }

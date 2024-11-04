@@ -11,9 +11,13 @@ class Scrap {
     this.print();
   }
 
-  static random(imgs, length) {
+  static random(canvas, imgs, length) {
     const points = Math.floor(random(4, 100));
-    const radius = new Vector(random(10, 50), random(50, 200));
+    const cnvDim = Math.min(canvas.width, canvas.height);
+    const radius = new Vector(
+      random(cnvDim * 0.001, cnvDim * 0.05),
+      random(cnvDim * 0.1, cnvDim * 0.2)
+    );
     return new Scrap(imgs, points, radius, length);
   }
 }

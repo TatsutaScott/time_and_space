@@ -6,12 +6,21 @@ import { limit } from "./util/math_util";
 import { setVideoStream, captureImages } from "./imageCapture";
 import { init_RNBO } from "./rnbo_setup";
 
-const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SETTINGS
 
+const samplingLength = 5000;
+const imgCount = 50;
+const fullScreen = true;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const systemWorker = new Worker(new URL("./worker.js", import.meta.url));
 const startButton = document.getElementById("start");
 const display = document.getElementById("display");
 const offscreenCanvas = display.transferControlToOffscreen();
-
 const video = setVideoStream(document.getElementById("viewFinder")); //set up video
 const functionList = [
   "clip",
@@ -24,6 +33,7 @@ const functionList = [
   "scrap",
 ];
 
+// initialize the RNBO device
 const device = init_RNBO(patcher, () => {
   startButton.style.display = "block";
   device.onMessage((e) => {
@@ -40,6 +50,7 @@ const device = init_RNBO(patcher, () => {
   });
 });
 
+// begins audio and video recording
 startButton.onclick = () => {
   document.getElementById("cover").style.display = "none"; //hide cover page
   document.getElementById("videoContainer").style.display = "block"; //show video
@@ -61,20 +72,26 @@ startButton.onclick = () => {
     document.getElementById("loadText").style.display = "block";
   }, 999);
 
-  captureImages(5000, 50, video, 4, systemWorker, () => {
+  captureImages(samplingLength, imgCount, video, systemWorker, () => {
     //show main canvas
     display.style.display = "block";
   }).then((imgs) => {
+    //canvas dimensions are set based on the mode
+    const canvasWidth = fullScreen ? window.innerWidth : imgs[0].width;
+    const canvasHeight = fullScreen ? window.innerHeight : imgs[0].height;
+
     //start the main canvas
     systemWorker.postMessage(
       {
         method: "setup",
         canvas: offscreenCanvas,
-        width: imgs[0].width,
-        height: imgs[1].height,
+        width: canvasWidth,
+        height: canvasHeight,
       },
       [offscreenCanvas]
     );
+
+    //transition mode to show main display canvas
     loadingAnimation.stop();
     loading.hideCanvas();
     document.getElementById("loadText").style.display = "none";

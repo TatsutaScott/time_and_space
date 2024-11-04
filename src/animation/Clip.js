@@ -14,9 +14,9 @@ class Clip {
     this.print();
   }
 
-  static random(imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[0].height;
+  static random(canvas, imgs, length) {
+    const w = canvas.width;
+    const h = canvas.height;
 
     const dim = new Vector(random(0, w), random(0, h));
     const sPos = new Vector(random(0, w - dim.x), random(0, h - dim.y));

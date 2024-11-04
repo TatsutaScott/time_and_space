@@ -18,14 +18,18 @@ class Spray {
     this.print();
   }
 
-  static random(imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[0].height;
-    const sDim = random(100, 200);
-    const dDim = random(100, 200);
+  static random(canvas, imgs, length) {
+    const sDim = random(imgs[0].width * 0.1, imgs[0].width * 0.25);
+    const dDim = random(canvas.width * 0.1, canvas.width * 0.25);
 
-    const sPos = new Vector(random(sDim, w - sDim), random(sDim, h - sDim));
-    const dPos = new Vector(random(dDim, w - dDim), random(dDim, h - dDim));
+    const sPos = new Vector(
+      random(sDim, imgs[0].width - sDim),
+      random(sDim, imgs[0].height - sDim)
+    );
+    const dPos = new Vector(
+      random(dDim, canvas.width - dDim),
+      random(dDim, canvas.height - dDim)
+    );
     const density = random(50, 750, true);
 
     return new Spray(random(imgs), length, sPos, sDim, dPos, dDim, density);

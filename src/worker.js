@@ -26,7 +26,13 @@ const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);
     canvas.background("white");
-    canvas.image(images[images.length - 1].image, 0, 0);
+    canvas.image(
+      images[images.length - 1].image,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
     drawLoop = requestAnimationFrame(draw);
   },
   loadImage: (e) => {
@@ -41,15 +47,14 @@ const workerMethods = {
     const img = new ImageData(e.data.bitmap, e.data.pixels);
     filtered[e.data.arr].push(img);
     console.log("filtered image loaded");
-    console.log(filtered);
   },
   randomAnimation: (e) => {
-    queue.add(random(animations)(random(filtered), e.data.length));
+    queue.add(random(animations)(canvas, random(filtered), e.data.length));
   },
   animation: (e) => {
     if (filtered[0]) {
       queue.add(
-        animations[e.data.type](random(filtered), e.data.length / 1000)
+        animations[e.data.type](canvas, random(filtered), e.data.length / 1000)
       );
     }
   },
