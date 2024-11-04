@@ -1,6 +1,6 @@
 import IMG from "./util/IMG";
 import { easingArray } from "./util/ease_util";
-import { probability } from "./util/random_util";
+import { random } from "./util/random_util";
 import { map } from "./util/math_util";
 
 export function setVideoStream(video) {
@@ -30,38 +30,48 @@ export function captureImages(time, captures, video, filters, worker, onload) {
     }
 
     // for a giver number, create a copy of the image set, but with chromakey filters applied
-    for (let i = 0; i < filters; i++) {
-      filterImages(imgs).then((filteredImgs) => {
-        for (let f of filteredImgs) {
-          worker.postMessage(
-            {
-              method: "loadFiltered",
-              arr: i,
-              bitmap: f.image,
-              pixels: f.pixels,
-            },
-            [f.image]
-          );
-        }
-      });
-    }
+    filterImages(imgs, random(easingArray), true).then((filteredImgs) => {
+      for (let f of filteredImgs) {
+        worker.postMessage(
+          {
+            method: "loadFiltered",
+            arr: 0,
+            bitmap: f.image,
+            pixels: f.pixels,
+          },
+          [f.image]
+        );
+      }
+    });
+    filterImages(imgs, random(easingArray), false).then((filteredImgs) => {
+      for (let f of filteredImgs) {
+        worker.postMessage(
+          {
+            method: "loadFiltered",
+            arr: 1,
+            bitmap: f.image,
+            pixels: f.pixels,
+          },
+          [f.image]
+        );
+      }
+    });
     onload();
     return imgs;
   });
 }
 
-function filterImages(images) {
+function filterImages(images, filter, direction) {
   return new Promise((resolve, reject) => {
     // Array to hold filtered bitmap promises
     const filteredBitmaps = images.map((image) => {
-      const filterDirection = probability(0.5);
       return new Promise((resolveImage, rejectImage) => {
         const filteredImage = image.copy((r, g, b, a) => {
           let gray = IMG.grayscale(r, g, b);
-          if (filterDirection) {
+          if (direction) {
             gray = map(gray, 0, 255, 255, 0);
           }
-          const eased = easingArray[12](gray / 255);
+          const eased = filter(gray / 255);
           return [r, g, b, eased * 255];
         });
 

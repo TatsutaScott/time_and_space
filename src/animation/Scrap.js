@@ -1,12 +1,9 @@
 import Vector from "../util/Vector";
 import { random, noise } from "../util/random_util";
-// import Vector from "./util/Vector";
-// import { random } from "./util/random_util";
-// import { p5Color } from "./util/color_util";
 
-class Cutter {
-  constructor(img, points, radius, length) {
-    this.img = img;
+class Scrap {
+  constructor(imgs, points, radius, length) {
+    this.img = random(imgs);
     this.points = points;
     this.radius = radius;
     this.length = Math.floor(length * 30);
@@ -17,11 +14,11 @@ class Cutter {
   static random(imgs, length) {
     const points = Math.floor(random(4, 100));
     const radius = new Vector(random(10, 50), random(50, 200));
-    return new Cutter(random(imgs), points, radius, length);
+    return new Scrap(imgs, points, radius, length);
   }
 }
 
-Cutter.prototype.print = function () {
+Scrap.prototype.print = function () {
   console.log(
     `type: cutter
 radius:
@@ -32,7 +29,7 @@ life: ${this.life}`
   );
 };
 
-Cutter.prototype.animate = function (canvas) {
+Scrap.prototype.animate = function (canvas) {
   const numPoints = 80;
   const centerX = random(0, canvas.width);
   const centerY = random(0, canvas.height);
@@ -57,8 +54,8 @@ Cutter.prototype.animate = function (canvas) {
   canvas.ctx.restore();
 };
 
-Cutter.prototype.update = function () {
+Scrap.prototype.update = function () {
   this.life--;
 };
 
-export default Cutter;
+export default Scrap;

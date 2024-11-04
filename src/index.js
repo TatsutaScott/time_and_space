@@ -2,7 +2,7 @@ import Canvas from "./util/Canvas";
 import loadingAnimation from "./loading";
 import patcher from "./max/TAS_main.rnbopat.export.json";
 
-import { random } from "./util/random_util";
+import { limit } from "./util/math_util";
 import { setVideoStream, captureImages } from "./imageCapture";
 import { init_RNBO } from "./rnbo_setup";
 
@@ -13,67 +13,31 @@ const display = document.getElementById("display");
 const offscreenCanvas = display.transferControlToOffscreen();
 
 const video = setVideoStream(document.getElementById("viewFinder")); //set up video
+const functionList = [
+  "clip",
+  "spray",
+  "smudge",
+  "layer",
+  "squiggle",
+  "worm",
+  "line",
+  "scrap",
+];
+
 const device = init_RNBO(patcher, () => {
   startButton.style.display = "block";
-
-  // device.onMessage((e) => {
-  //   if (e.tag == "out3") {
-  //     if (e.payload[1] == 0) return;
-  //     switch (e.payload[0]) {
-  //       case 0:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "clip",
-  //         });
-  //         break;
-  //       case 1:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "spray",
-  //         });
-  //         break;
-  //       case 2:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "smudge",
-  //         });
-  //         break;
-  //       case 3:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "layer",
-  //         });
-  //         break;
-  //       case 4:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "squiggle",
-  //         });
-  //         break;
-  //       case 5:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "worm",
-  //         });
-  //         break;
-  //       case 6:
-  //         systemWorker.postMessage({
-  //           method: "animation",
-  //           length: e.payload[1],
-  //           type: "line",
-  //         });
-  //         break;
-  //       default:
-  //         console.log(e.payload);
-  //     }
-  //   }
-  // });
+  device.onMessage((e) => {
+    if (e.tag == "out3") {
+      if (e.payload[1] < 1) return;
+      const funcIndex = limit(e.payload[0], 0, functionList.length - 1);
+      const func = functionList[funcIndex];
+      systemWorker.postMessage({
+        method: "animation",
+        length: e.payload[1],
+        type: func,
+      });
+    }
+  });
 });
 
 startButton.onclick = () => {
@@ -97,7 +61,7 @@ startButton.onclick = () => {
     document.getElementById("loadText").style.display = "block";
   }, 999);
 
-  captureImages(1000, 10, video, 4, systemWorker, () => {
+  captureImages(5000, 50, video, 4, systemWorker, () => {
     //show main canvas
     display.style.display = "block";
   }).then((imgs) => {
@@ -114,13 +78,5 @@ startButton.onclick = () => {
     loadingAnimation.stop();
     loading.hideCanvas();
     document.getElementById("loadText").style.display = "none";
-  });
-};
-
-display.onclick = () => {
-  systemWorker.postMessage({
-    method: "animation",
-    length: random(0.2, 4),
-    type: "cutter",
   });
 };
