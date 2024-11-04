@@ -74,7 +74,7 @@ Layer.prototype.layer = function (canvas, img, destY, srcY, h, half) {
     srcY,
     w / 2,
     h,
-    this.center - w / 2,
+    -this.center,
     destY,
     w / 2,
     h

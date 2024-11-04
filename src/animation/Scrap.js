@@ -34,27 +34,42 @@ life: ${this.life}`
 };
 
 Scrap.prototype.animate = function (canvas) {
-  const numPoints = 80;
-  const centerX = random(0, canvas.width);
-  const centerY = random(0, canvas.height);
+  const disCenter = new Vector(
+    random(0, canvas.width),
+    random(0, canvas.height)
+  );
+  const srcCenter = new Vector(
+    random(0, this.img.width - this.radius),
+    random(0, this.img.height - this.radius)
+  );
   const nOff = random(0, 12); //noise offset
   const r = random(this.radius.x, this.radius.y);
   const clipPath = new Path2D();
-  for (let i = 0; i < numPoints; i++) {
-    const angle = (i / numPoints) * Math.PI * 2;
+  for (let i = 0; i < this.points; i++) {
+    const angle = (i / this.points) * Math.PI * 2;
     const radius =
       noise(Math.cos(angle + nOff), Math.sin(angle + nOff), nOff) * r;
     const v = Vector.fromAngle(angle).mult(radius);
     if (i == 0) {
-      clipPath.moveTo(centerX + v.x, centerY + v.y);
+      clipPath.moveTo(disCenter.x + v.x, disCenter.y + v.y);
     } else {
-      clipPath.lineTo(centerX + v.x, centerY + v.y);
+      clipPath.lineTo(disCenter.x + v.x, disCenter.y + v.y);
     }
   }
   clipPath.closePath();
   canvas.ctx.save();
   canvas.ctx.clip(clipPath);
-  canvas.image(this.img.image, 0, 0);
+  canvas.image(
+    this.img.image,
+    this.img.width - srcCenter.x,
+    this.img.height - srcCenter.y,
+    this.radius,
+    this.radius,
+    disCenter.x - this.radius,
+    disCenter.y - this.radius,
+    this.radius,
+    this.radius
+  );
   canvas.ctx.restore();
 };
 

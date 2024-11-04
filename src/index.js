@@ -10,8 +10,8 @@ import { init_RNBO } from "./rnbo_setup";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SETTINGS
 
-const samplingLength = 5000;
-const imgCount = 50;
+const samplingLength = 2000;
+const imgCount = 10;
 const fullScreen = true;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,18 +36,18 @@ const functionList = [
 // initialize the RNBO device
 const device = init_RNBO(patcher, () => {
   startButton.style.display = "block";
-  device.onMessage((e) => {
-    if (e.tag == "out3") {
-      if (e.payload[1] < 1) return;
-      const funcIndex = limit(e.payload[0], 0, functionList.length - 1);
-      const func = functionList[funcIndex];
-      systemWorker.postMessage({
-        method: "animation",
-        length: e.payload[1],
-        type: func,
-      });
-    }
-  });
+  // device.onMessage((e) => {
+  //   if (e.tag == "out3") {
+  //     if (e.payload[1] < 1) return;
+  //     const funcIndex = limit(e.payload[0], 0, functionList.length - 1);
+  //     const func = functionList[funcIndex];
+  //     systemWorker.postMessage({
+  //       method: "animation",
+  //       length: e.payload[1],
+  //       type: func,
+  //     });
+  //   }
+  // });
 });
 
 // begins audio and video recording
@@ -95,5 +95,13 @@ startButton.onclick = () => {
     loadingAnimation.stop();
     loading.hideCanvas();
     document.getElementById("loadText").style.display = "none";
+  });
+};
+
+display.onclick = () => {
+  systemWorker.postMessage({
+    method: "animation",
+    type: "layer",
+    length: 1000,
   });
 };
