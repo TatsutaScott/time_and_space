@@ -15,8 +15,8 @@ export function init_RNBO(patcher, onload = () => null) {
             console.log("audio recorded successfully");
             device.sendMessage("in3", [0]); // turn off recording
 
-            console.log("initiating main patch");
-            device.sendMessage("in4", [1]); // start main patch
+            // console.log("initiating main patch");
+            // device.sendMessage("in4", [1]); // start main patch
           }
           break;
         default:

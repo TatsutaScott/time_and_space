@@ -70,7 +70,7 @@ startButton.onclick = () => {
     loading.hideCanvas();
     video.style.display = "none";
     document.getElementById("loadText").style.display = "block";
-  }, 999);
+  }, samplingLength);
 
   captureImages(samplingLength, imgCount, video, systemWorker, () => {
     //show main canvas
@@ -95,6 +95,9 @@ startButton.onclick = () => {
     loadingAnimation.stop();
     loading.hideCanvas();
     document.getElementById("loadText").style.display = "none";
+
+    console.log("initiating main patch");
+    device.sendMessage("in4", [1]); // start main patch
   });
 };
 
