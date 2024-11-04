@@ -26,6 +26,8 @@ const workerMethods = {
   setup: (e) => {
     canvas = new Canvas(e.data.canvas, e.data.width, e.data.height);
     canvas.background("white");
+    canvas.save();
+    canvas.ctx.filter = "blur(8px)";
     canvas.image(
       images[images.length - 1].image,
       0,
@@ -33,6 +35,7 @@ const workerMethods = {
       canvas.width,
       canvas.height
     );
+    canvas.restore();
     drawLoop = requestAnimationFrame(draw);
   },
   loadImage: (e) => {

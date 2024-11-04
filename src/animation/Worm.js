@@ -2,6 +2,7 @@ import Vector from "../util/Vector";
 import { isValid } from "../util/misc_util";
 import { random } from "../util/random_util";
 import { line } from "../util/shape_util";
+import { map } from "../util/math_util";
 
 class Worm {
   constructor(imgs, length, pos, num, dist) {
@@ -19,9 +20,6 @@ class Worm {
   }
 
   static random(canvas, imgs, length) {
-    const w = imgs[0].width;
-    const h = imgs[0].height;
-
     const pos = new Vector(random(0, canvas.width), random(0, canvas.height));
     const num = random(3, 30, true);
     const dist = new Vector(random(1, 30), random(1, 30));
@@ -67,7 +65,13 @@ Worm.prototype.animate = function (canvas) {
           },
         ],
       });
-      canvas.shape(line(prev.x, prev.y, i.x, i.y), null, gradient);
+      const linePath = line(
+        map(prev.x, 0, this.img.width, 0, canvas.width),
+        map(prev.y, 0, this.img.height, 0, canvas.height),
+        map(i.x, 0, this.img.width, 0, canvas.width),
+        map(i.y, 0, this.img.height, 0, canvas.height)
+      );
+      canvas.shape(linePath, null, gradient);
     }
   }
 };

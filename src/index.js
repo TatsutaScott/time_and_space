@@ -36,18 +36,18 @@ const functionList = [
 // initialize the RNBO device
 const device = init_RNBO(patcher, () => {
   startButton.style.display = "block";
-  // device.onMessage((e) => {
-  //   if (e.tag == "out3") {
-  //     if (e.payload[1] < 1) return;
-  //     const funcIndex = limit(e.payload[0], 0, functionList.length - 1);
-  //     const func = functionList[funcIndex];
-  //     systemWorker.postMessage({
-  //       method: "animation",
-  //       length: e.payload[1],
-  //       type: func,
-  //     });
-  //   }
-  // });
+  device.onMessage((e) => {
+    if (e.tag == "out3") {
+      if (e.payload[1] < 1) return;
+      const funcIndex = limit(e.payload[0], 0, functionList.length - 1);
+      const func = functionList[funcIndex];
+      systemWorker.postMessage({
+        method: "animation",
+        length: e.payload[1],
+        type: func,
+      });
+    }
+  });
 });
 
 // begins audio and video recording
@@ -98,10 +98,10 @@ startButton.onclick = () => {
   });
 };
 
-display.onclick = () => {
-  systemWorker.postMessage({
-    method: "animation",
-    type: "squiggle",
-    length: 1000,
-  });
-};
+// display.onclick = () => {
+//   systemWorker.postMessage({
+//     method: "animation",
+//     type: "worm",
+//     length: 1000,
+//   });
+// };
