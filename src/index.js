@@ -101,7 +101,7 @@ startButton.onclick = () => {
 display.onclick = () => {
   systemWorker.postMessage({
     method: "animation",
-    type: "layer",
+    type: "spray",
     length: 1000,
   });
 };

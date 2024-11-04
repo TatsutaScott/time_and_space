@@ -2,7 +2,7 @@ import Vector from "../util/Vector";
 import { random } from "../util/random_util";
 import { easingArray } from "../util/ease_util";
 import { point } from "../util/shape_util";
-import { wrap } from "../util/math_util";
+import { wrap, map } from "../util/math_util";
 
 class Spray {
   constructor(img, length, sPos, sDim, dPos, dDim, density) {
@@ -57,12 +57,16 @@ Spray.prototype.animate = function (canvas) {
   for (let i = 0; i < this.density; i++) {
     const radius = random(0, this.dDim);
     const dest = Vector.random(radius).add(this.dPos.x, this.dPos.y);
-    const source = dest.map(
-      new Vector(this.dPos.x, this.dPos.y),
-      new Vector(this.dPos.x + this.dDim, this.dPos.y + this.dDim),
-      new Vector(this.sPos.x, this.sPos.y),
-      new Vector(this.sPos.x + this.sDim, this.sPos.y + this.sDim)
-    );
+    const scaledRadius = map(radius, 0, this.dDim, 0, this.sDim);
+    const source = Vector.fromAngle(dest.heading())
+      .mult(scaledRadius)
+      .add(this.sPos);
+    // const source = dest.map(
+    //   new Vector(this.dPos.x, this.dPos.y),
+    //   new Vector(this.dPos.x + this.dDim, this.dPos.y + this.dDim),
+    //   new Vector(this.sPos.x, this.sPos.y),
+    //   new Vector(this.sPos.x + this.sDim, this.sPos.y + this.sDim)
+    // );
     source.floor();
 
     const c = this.img.get(source.x, source.y);
