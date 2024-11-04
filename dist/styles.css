@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Wire+One&display=swap");
+.wire-one-regular {
+  font-family: "Wire One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  font-family: "Wire One";
+  font-style: normal;
+
+  border: 0;
+  list-style: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-size-adjust: none;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* overflow: hidden; */
+}
+
+#content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cover {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2em 2em;
+  gap: 1em;
+  height: fit-content;
+  border-radius: 5px;
+
+  color: white;
+  z-index: 1;
+  border: rgba(255, 255, 255, 0.25) 1px solid;
+  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.8));
+}
+
+#display {
+  display: none;
+  position: relative;
+  left: 0;
+  top: 0;
+  z-index: 900;
+}
+
+#videoContainer {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  display: none;
+}
+
+#viewFinder {
+  position: relative;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+  filter: blur(2px) brightness(50%)
+    drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.479)) saturate(200%);
+}
+
+#loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  border-radius: 10px;
+}
+
+#start {
+  font-family: "Wire One", sans-serif;
+
+  display: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.7em;
+  background: linear-gradient(to right, white 1px, transparent 1px) 0 0,
+    linear-gradient(to right, white 1px, transparent 1px) 0 100%,
+    linear-gradient(to left, white 1px, transparent 1px) 100% 0,
+    linear-gradient(to left, white 1px, transparent 1px) 100% 100%,
+    linear-gradient(to bottom, white 1px, transparent 1px) 0 0,
+    linear-gradient(to bottom, white 1px, transparent 1px) 100% 0,
+    linear-gradient(to top, white 1px, transparent 1px) 0 100%,
+    linear-gradient(to top, white 1px, transparent 1px) 100% 100%;
+
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  transition: all 0.25s;
+}
+
+#start:hover {
+  padding: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.025);
+  font-size: 1.5rem;
+}
+h1 {
+  font-family: "Wire One";
+  font-size: 4rem;
+  padding: 0;
+  margin: 0;
+}
+
+#loadText {
+  display: none;
+  font-family: "Wire One", sans-serif;
+  color: white;
+  font-size: 1.5rem;
+}
+p {
+  font-family: "Wire One", sans-serif;
+  font-size: 1.25rem;
+  margin: 0;
+}
