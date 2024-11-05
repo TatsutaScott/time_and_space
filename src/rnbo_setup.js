@@ -4,6 +4,8 @@ export function init_RNBO(patcher, onload = () => null) {
   const device = new RNBO_device(); //make new device
 
   device.init(patcher).then(() => {
+    console.log(device);
+
     device.getInput(); //set audio in stream
     console.log("RNBO device loaded successfully");
 

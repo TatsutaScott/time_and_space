@@ -3,7 +3,10 @@ import { createDevice, TimeNow, MessageEvent } from "@rnbo/js";
 class RNBO_device {
   constructor() {
     const WAContext = window.AudioContext || window.webkitAudioContext; // this is what the audio will play through
-    this.context = new WAContext();
+    this.context = new WAContext({
+      latencyHint: "interactive",
+      sampleRate: 44100,
+    });
     this.gainNode = new GainNode(this.context);
     this.gainNode.connect(this.context.destination);
     this.gainNode.gain.value = 0;
@@ -50,7 +53,13 @@ class RNBO_device {
     };
 
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
+      .getUserMedia({
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false,
+        },
+      })
       .then(handle)
       .catch(function (err) {
         console.error("Error accessing the microphone: ", err);

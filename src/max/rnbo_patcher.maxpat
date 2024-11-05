@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1468.0, 705.0 ],
+		"rect" : [ 134.0, 134.0, 1468.0, 705.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -55,7 +55,6 @@
 ,
 					"outlettype" : [ "list" ],
 					"patching_rect" : [ 19.0, 231.0, 276.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"rnboattrcache" : 					{
 
 					}
@@ -142,7 +141,6 @@
 ,
 					"outlettype" : [ "list" ],
 					"patching_rect" : [ 19.0, 170.0, 284.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"rnboattrcache" : 					{
 
 					}
@@ -401,7 +399,6 @@
 ,
 					"outlettype" : [ "list" ],
 					"patching_rect" : [ 19.0, 48.0, 304.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"rnboattrcache" : 					{
 
 					}
@@ -802,7 +799,7 @@
 						"subtype" : "Undefined",
 						"embed" : 1,
 						"snapshot" : 						{
-							"__presetid" : "filtered_tone.rnbopat"
+
 						}
 ,
 						"snapshotlist" : 						{
@@ -817,7 +814,7 @@
 									"subtype" : "",
 									"embed" : 0,
 									"snapshot" : 									{
-										"__presetid" : "filtered_tone.rnbopat"
+
 									}
 ,
 									"fileref" : 									{
@@ -908,7 +905,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 399.0, 175.0, 45.0, 45.0 ]
+					"patching_rect" : [ 399.0, 231.0, 45.0, 45.0 ]
 				}
 
 			}
@@ -1015,89 +1012,6 @@
 						"subtype" : "Undefined",
 						"embed" : 1,
 						"snapshot" : 						{
-							"__presetid" : "TAS_main.rnbopat",
-							"__sps" : 							{
-								"p_obj-3" : 								{
-
-								}
-,
-								"p_obj-23" : 								{
-
-								}
-,
-								"routing" : 								{
-
-								}
-,
-								"p_obj-58" : 								{
-
-								}
-,
-								"p_obj-14" : 								{
-
-								}
-,
-								"reverb" : 								{
-									"__sps" : 									{
-										"p_obj-6" : 										{
-
-										}
-
-									}
-
-								}
-,
-								"p_obj-20" : 								{
-
-								}
-,
-								"p_obj-17" : 								{
-
-								}
-,
-								"p_obj-18" : 								{
-
-								}
-,
-								"p_obj-21" : 								{
-
-								}
-,
-								"detect" : 								{
-
-								}
-,
-								"p_obj-22" : 								{
-									"__sps" : 									{
-										"perc[5]" : 										{
-
-										}
-,
-										"perc" : 										{
-
-										}
-,
-										"perc[4]" : 										{
-
-										}
-,
-										"perc[3]" : 										{
-
-										}
-,
-										"perc[2]" : 										{
-
-										}
-,
-										"perc[1]" : 										{
-
-										}
-
-									}
-
-								}
-
-							}
 
 						}
 ,
@@ -1113,89 +1027,6 @@
 									"subtype" : "",
 									"embed" : 0,
 									"snapshot" : 									{
-										"__presetid" : "TAS_main.rnbopat",
-										"__sps" : 										{
-											"p_obj-3" : 											{
-
-											}
-,
-											"p_obj-23" : 											{
-
-											}
-,
-											"routing" : 											{
-
-											}
-,
-											"p_obj-58" : 											{
-
-											}
-,
-											"p_obj-14" : 											{
-
-											}
-,
-											"reverb" : 											{
-												"__sps" : 												{
-													"p_obj-6" : 													{
-
-													}
-
-												}
-
-											}
-,
-											"p_obj-20" : 											{
-
-											}
-,
-											"p_obj-17" : 											{
-
-											}
-,
-											"p_obj-18" : 											{
-
-											}
-,
-											"p_obj-21" : 											{
-
-											}
-,
-											"detect" : 											{
-
-											}
-,
-											"p_obj-22" : 											{
-												"__sps" : 												{
-													"perc[5]" : 													{
-
-													}
-,
-													"perc" : 													{
-
-													}
-,
-													"perc[4]" : 													{
-
-													}
-,
-													"perc[3]" : 													{
-
-													}
-,
-													"perc[2]" : 													{
-
-													}
-,
-													"perc[1]" : 													{
-
-													}
-
-												}
-
-											}
-
-										}
 
 									}
 ,
@@ -1237,20 +1068,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-7", 3 ],
 					"source" : [ "obj-24", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-22", 1 ],
-					"source" : [ "obj-7", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-22", 0 ],
-					"source" : [ "obj-7", 0 ]
 				}
 
 			}

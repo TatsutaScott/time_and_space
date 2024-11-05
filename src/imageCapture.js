@@ -23,7 +23,6 @@ export function setVideoStream(video) {
     .then((fallbackStream) => {
       if (fallbackStream) {
         video.srcObject = fallbackStream;
-        console.log(fallbackStream);
       }
     });
   return video;
