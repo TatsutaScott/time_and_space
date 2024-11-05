@@ -1,6 +1,6 @@
 import Canvas from "./util/Canvas";
 import loadingAnimation from "./loading";
-import patcher from "./max/TAS_main_11.5_V2.json";
+import patcher from "./max/TAS_main_11.5_v3.json";
 
 import { limit } from "./util/math_util";
 import { setVideoStream, captureImages } from "./imageCapture";
