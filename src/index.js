@@ -54,7 +54,7 @@ const device = init_RNBO(patcher, () => {
 startButton.onclick = () => {
   document.getElementById("cover").style.display = "none"; //hide cover page
   document.getElementById("videoContainer").style.display = "block"; //show video
-
+  console.log(video);
   //init loading animation
   const loading = new Canvas(
     document.getElementById("loading"),

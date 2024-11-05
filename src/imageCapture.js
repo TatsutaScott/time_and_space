@@ -5,12 +5,26 @@ import { map } from "./util/math_util";
 
 export function setVideoStream(video) {
   navigator.mediaDevices
-    .getUserMedia({ video: true }) //get the video strea
+    .getUserMedia({
+      video: {
+        facingMode: { exact: "environment" }, // No `exact` keyword, for broader compatibility
+      },
+    })
     .then((stream) => {
       video.srcObject = stream; //set stream to show in the video object
     })
     .catch((err) => {
-      console.error("Error accessing camera:", err); //throw an error if it can't access the video stream
+      console.log(
+        "Error accessing the camera, using the front camera instead:",
+        err
+      );
+      return navigator.mediaDevices.getUserMedia({ video: true });
+    })
+    .then((fallbackStream) => {
+      if (fallbackStream) {
+        video.srcObject = fallbackStream;
+        console.log(fallbackStream);
+      }
     });
   return video;
 }
