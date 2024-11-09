@@ -54,10 +54,7 @@ class RNBO_device {
 
     navigator.mediaDevices
       .getUserMedia({
-        audio: {
-          echoCancellation: false,
-          noiseSuppression: false,
-        },
+        audio: true,
         video: false,
       })
       .then(handle)
