@@ -26,6 +26,15 @@ class Clip {
 
     return new Clip(imgs, sPos, dPos, dim, start, end, length);
   }
+
+  static full(canvas, imgs, length) {
+    const sPos = new Vector(0, 0);
+    const dPos = new Vector(0, 0);
+    const dim = new Vector(canvas.width, canvas.height);
+    const start = 0;
+    const end = imgs.length - 1;
+    return new Clip(imgs, sPos, dPos, dim, start, end, length);
+  }
 }
 
 Clip.prototype.print = function () {

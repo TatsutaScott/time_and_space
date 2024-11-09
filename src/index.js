@@ -97,6 +97,7 @@ startButton.onclick = () => {
     document.getElementById("loadText").style.display = "none";
 
     console.log("initiating main patch");
+    systemWorker.postMessage({ method: "playback" });
     device.sendMessage("in4", [1]); // start main patch
   });
 };

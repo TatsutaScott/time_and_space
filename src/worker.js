@@ -54,6 +54,9 @@ const workerMethods = {
   randomAnimation: (e) => {
     queue.add(random(animations)(canvas, random(filtered), e.data.length));
   },
+  playback: () => {
+    queue.add(Clip.full(canvas, images, 4000));
+  },
   animation: (e) => {
     if (filtered[0]) {
       queue.add(
