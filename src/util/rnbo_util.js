@@ -9,7 +9,7 @@ class RNBO_device {
     });
     this.gainNode = new GainNode(this.context);
     this.gainNode.connect(this.context.destination);
-    this.gainNode.gain.value = 0;
+    //this.gainNode.gain.value = 0;
   }
 
   async init(patcher, dependencies) {
@@ -57,8 +57,8 @@ class RNBO_device {
         audio: {
           echoCancellation: false,
           noiseSuppression: false,
-          autoGainControl: false,
         },
+        video: false,
       })
       .then(handle)
       .catch(function (err) {

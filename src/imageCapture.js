@@ -9,6 +9,7 @@ export function setVideoStream(video) {
       video: {
         facingMode: { exact: "environment" }, // No `exact` keyword, for broader compatibility
       },
+      audio: false,
     })
     .then((stream) => {
       video.srcObject = stream; //set stream to show in the video object
