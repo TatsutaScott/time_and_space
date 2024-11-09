@@ -1,7 +1,7 @@
 import Canvas from "./util/Canvas";
 import loadingAnimation from "./loading";
 //import patcher from "./max/TAS_main_11.7v4.json";
-import patcher from "./max/timeSpace_main_11.9.json";
+import patcher from "./max/timeSpace_main.11.9.v2.json";
 import { limit } from "./util/math_util";
 import { setVideoStream, captureImages } from "./imageCapture";
 import { init_RNBO } from "./rnbo_setup";
@@ -97,7 +97,7 @@ startButton.onclick = () => {
     document.getElementById("loadText").style.display = "none";
 
     console.log("initiating main patch");
-    systemWorker.postMessage({ method: "playback" });
+    // systemWorker.postMessage({ method: "playback" });
     device.sendMessage("in4", [1]); // start main patch
   });
 };
