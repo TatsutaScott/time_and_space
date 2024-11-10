@@ -25,12 +25,12 @@ const video = setVideoStream(document.getElementById("viewFinder")); //set up vi
 const functionList = [
   "clip",
   "spray",
+  "scrap",
   "smudge",
   "layer",
   "squiggle",
   "worm",
   "line",
-  "scrap",
 ];
 
 // initialize the RNBO device

@@ -18,13 +18,14 @@ class Scrap {
       random(cnvDim * 0.001, cnvDim * 0.05),
       random(cnvDim * 0.1, cnvDim * 0.2)
     );
+    radius.floor();
     return new Scrap(imgs, points, radius, length);
   }
 }
 
 Scrap.prototype.print = function () {
   console.log(
-    `type: cutter
+    `type: scrap
 radius:
     lo: ${this.radius.x}
     hi: ${this.radius.y}
@@ -34,16 +35,20 @@ life: ${this.life}`
 };
 
 Scrap.prototype.animate = function (canvas) {
+  const r = random(this.radius.x, this.radius.y);
+
   const disCenter = new Vector(
     random(0, canvas.width),
     random(0, canvas.height)
   );
   const srcCenter = new Vector(
-    random(0, this.img.width - this.radius),
-    random(0, this.img.height - this.radius)
+    random(0, this.img.width - r),
+    random(0, this.img.height - r)
   );
+  disCenter.floor();
+  srcCenter.floor();
+
   const nOff = random(0, 12); //noise offset
-  const r = random(this.radius.x, this.radius.y);
   const clipPath = new Path2D();
   for (let i = 0; i < this.points; i++) {
     const angle = (i / this.points) * Math.PI * 2;
@@ -57,19 +62,22 @@ Scrap.prototype.animate = function (canvas) {
     }
   }
   clipPath.closePath();
+
   canvas.ctx.save();
   canvas.ctx.clip(clipPath);
+
   canvas.image(
     this.img.image,
-    this.img.width - srcCenter.x,
-    this.img.height - srcCenter.y,
-    this.radius,
-    this.radius,
-    disCenter.x - this.radius,
-    disCenter.y - this.radius,
-    this.radius,
-    this.radius
+    srcCenter.x,
+    srcCenter.y,
+    r,
+    r,
+    disCenter.x - r / 2,
+    disCenter.y - r / 2,
+    r,
+    r
   );
+
   canvas.ctx.restore();
 };
 
